@@ -4,7 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 
-public class SVGViewer {
+public class SVGViewer
+{
 
 	/**
 	 * @param args
@@ -42,6 +43,11 @@ public class SVGViewer {
 		CanvasComponent canvas2 = new CanvasComponent(l);
 		canvas2.setBounds(frame.getBounds());
 		frame.add(canvas2);
+		
+		Rectangle r = new Rectangle(5, 5, 210, 110, Color.blue);
+		CanvasComponent canvas3 = new CanvasComponent(r);
+		canvas3.setBounds(frame.getBounds());
+		frame.add(canvas3);
 		frame.setVisible(true);
 	}
 

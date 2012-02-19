@@ -14,7 +14,8 @@ public class Target implements Paintable
 
 	private Color[] rings;
 
-	public Target(double x, double y, Color[] rings ){
+	public Target(double x, double y, Color[] rings )
+	{
 		this.originX = x;
 		this.originY = y;
 		this.rings = rings;
@@ -23,7 +24,8 @@ public class Target implements Paintable
 		ringDistance = width/rings.length;
 	}
 
-	public void paint( Graphics g ){
+	public void paint( Graphics g )
+	{
 
 		double x = originX - width/2;
 		double y = originY - width/2;
@@ -38,12 +40,14 @@ public class Target implements Paintable
 		}
 	}
 
-	public void move( double deltaX, double deltaY ){
+	public void move( double deltaX, double deltaY )
+	{
 		originX+=deltaX;
 		originY+=deltaY;
 	}
 	
-	public void moveTo(double x, double y) {
+	public void moveTo(double x, double y)
+	{
 		originX = x;
 		originY = y;
 	}
