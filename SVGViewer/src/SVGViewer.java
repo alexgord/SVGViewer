@@ -49,6 +49,12 @@ public class SVGViewer
 		canvas3.setBounds(frame.getBounds());
 		frame.add(canvas3);
 		frame.setVisible(true);
+		
+		Ellipse e = new Ellipse(50, 50, 210, 110, Color.orange);
+		CanvasComponent canvas4 = new CanvasComponent(e);
+		canvas4.setBounds(frame.getBounds());
+		frame.add(canvas4);
+		frame.setVisible(true);
 	}
 
 }
