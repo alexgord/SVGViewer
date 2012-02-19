@@ -1,7 +1,8 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Target {
+public class Target implements Paintable
+{
 
 	
 	private final int DEFAULT_WIDTH = 100;

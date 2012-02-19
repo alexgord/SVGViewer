@@ -5,18 +5,18 @@ import javax.swing.JComponent;
 
 public class CanvasComponent extends JComponent {
 
-	private Target target;
+	private Paintable paintable;
 	
-	public CanvasComponent(Target target) {
+	public CanvasComponent(Paintable paintable) {
 		super();
-		this.target = target;
+		this.paintable = paintable;
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if(target != null)
-			target.paint(g);
+		if(paintable != null)
+			paintable.paint(g);
 	}
 	
 }
