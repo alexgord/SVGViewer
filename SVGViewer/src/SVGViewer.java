@@ -11,16 +11,16 @@ public class SVGViewer
 	{
 		JFrame frame = new JFrame();
 		frame.setTitle("Testing CanvasComponent");
-		frame.setBounds(0, 0, 300, 300);
+		frame.setBounds(0, 0, 600, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//testing line
-		Line l = new Line(50, 5, 100, 100, Color.black);
+		Line l = new Line(50, 50, 60, 80, Color.black);
 		CanvasComponent canvas = new CanvasComponent(l);
 		canvas.setBounds(frame.getBounds());
 		frame.add(canvas);
 		
-		l = new Line(500, 500, 210, 110, Color.black);
+		l = new Line(500, 200, 210, 110, Color.black);
 		CanvasComponent canvas2 = new CanvasComponent(l);
 		canvas2.setBounds(frame.getBounds());
 		frame.add(canvas2);
