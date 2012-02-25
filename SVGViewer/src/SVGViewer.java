@@ -1,15 +1,22 @@
 import java.awt.Color;
+import java.io.IOException;
+
 import javax.swing.JFrame;
+
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 public class SVGViewer
 {
 
 	/**
 	 * @param args
+	 * @throws SAXException 
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws SAXException
 	{
-		JFrame frame = new JFrame();
+		/*JFrame frame = new JFrame();
 		frame.setTitle("Testing CanvasComponent");
 		frame.setBounds(0, 0, 600, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,7 +79,25 @@ public class SVGViewer
 		CanvasComponent canvas6 = new CanvasComponent(pl);
 		canvas6.setBounds(frame.getBounds());
 		frame.add(canvas6);
-		frame.setVisible(true);
+		frame.setVisible(true);*/
+		String uri = "http://linux-cs.johnabbott.qc.ca/~ian/cs603/asg2/rectangles.svg";
+		XMLReader reader = XMLReaderFactory.createXMLReader();
+		XMLStatHandler handler = new XMLStatHandler();
+		reader.setErrorHandler(handler);
+		reader.setContentHandler(handler);
+		try {
+		  reader.parse(uri);
+		  if(handler.hasError()) {
+		    System.out.println("Fix the errors listed above...");
+		  }
+		  else {
+		    System.out.println("No errors detected.");
+		  }
+		} 
+		catch (Exception e) {
+		  System.err.println(e.getMessage());
+		  System.exit(1);
+		} 
 	}
 
 }
