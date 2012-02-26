@@ -1,5 +1,9 @@
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.JFrame;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -60,13 +64,12 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 		frame.setBounds(0, 0, 600, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		CanvasComponent canvas;
-		//testing line
-		for (int i = 0; i < plist.size(); i++ )
+		for (int i = plist.size(); i > 0; i-- )
 		{
-			canvas = new CanvasComponent(plist.get(i));
+			canvas = new CanvasComponent(plist.get(i - 1));
 			canvas.setBounds(frame.getBounds());
 			frame.add(canvas);
-			System.out.println(i);
+			System.out.println(i - 1);
 		}
 		frame.setVisible(true);
 	}
@@ -118,10 +121,6 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 	  throws SAXException
 	{
 		Paintable toAdd;
-		int height;
-		int width;
-		int x;
-		int y;
 		Color strokeColor;
 		Color fillColor;
 		System.out.println("start <" + qName + "> element");
@@ -133,14 +132,74 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 			}
 			if (qName == "rect")
 			{
+				int height;
+				int width;
+				int x;
+				int y;
 				x = Integer.decode(atts.getValue(0));
 				y = Integer.decode(atts.getValue(1));
 				height = Integer.decode(atts.getValue(2));
 				width = Integer.decode(atts.getValue(3));
-				fillColor = Color.blue;
+				//fillColor = Color.getColor(atts.getValue(4));//Color.blue;
+				LinkedList<String> numbers = new LinkedList<String>();
+
+				Pattern p = Pattern.compile("\\d+");
+				Matcher m = p.matcher(atts.getValue(4)); 
+				while (m.find())
+				{
+				   numbers.add(m.group());
+				}
+				fillColor = new Color(Integer.valueOf(numbers.get(0)), Integer.valueOf(numbers.get(1)), Integer.valueOf(numbers.get(2)));
 				strokeColor = Color.black;
 				toAdd = new Rectangle(x, y, height, width, fillColor, strokeColor);
 				plist.add(toAdd);
+			}
+			else
+			{
+				if (qName == "ellipse")//ellipse
+				{
+					int ry;
+					int rx;
+					int cx;
+					int cy;
+					cx = Integer.decode(atts.getValue(0));
+					cy = Integer.decode(atts.getValue(1));
+					rx = Integer.decode(atts.getValue(2));
+					ry = Integer.decode(atts.getValue(3));
+					int strokeWidth;
+					//fillColor = Color.getColor(atts.getValue(4));//Color.blue;
+					LinkedList<String> numbers = new LinkedList<String>();
+
+					Pattern p = Pattern.compile("\\d+");
+					Matcher m = p.matcher(atts.getValue(4)); 
+					while (m.find())
+					{
+					   numbers.add(m.group());
+					}
+					fillColor = new Color(Integer.valueOf(numbers.get(0)), Integer.valueOf(numbers.get(1)), Integer.valueOf(numbers.get(2)));
+					
+					if (atts.getLength() > 5)
+					{
+						p = Pattern.compile("\\d+");
+						m = p.matcher(atts.getValue(5));
+						numbers = new LinkedList<String>();
+						while (m.find())
+						{
+						   numbers.add(m.group());
+						}
+						strokeColor = new Color(Integer.valueOf(numbers.get(0)), Integer.valueOf(numbers.get(1)), Integer.valueOf(numbers.get(2)));
+						
+						strokeWidth = Integer.decode(atts.getValue(6));
+						System.err.println("Stroke width: " + strokeWidth);
+					}
+					else
+					{
+						strokeColor = Color.black;
+						strokeWidth = 0;
+					}
+					toAdd = new Ellipse(cx - rx, cy - ry, ry * 2, rx * 2, fillColor, strokeColor, strokeWidth);
+					plist.add(toAdd);
+				}
 			}
 			System.out.println();
 		}

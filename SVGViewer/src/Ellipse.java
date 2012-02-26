@@ -1,6 +1,8 @@
 import java.awt.Graphics;
 import java.awt.Color;
 
+import javax.swing.border.AbstractBorder;
+
 public class Ellipse implements Paintable
 {
 	private int x;
@@ -9,8 +11,9 @@ public class Ellipse implements Paintable
 	private int height;
 	private Color fillColor;
 	private Color strokeColor;
+	private int strokeWidth;
 	
-	public Ellipse (int x, int y, int width, int height, Color fillColor, Color strokeColor)
+	public Ellipse (int x, int y, int height, int width, Color fillColor, Color strokeColor, int strokeWidth)
 	{
 		this.x = x;
 		this.y = y;
@@ -18,6 +21,7 @@ public class Ellipse implements Paintable
 		this.height = height;
 		this.fillColor = fillColor;
 		this.strokeColor = strokeColor;
+		this.strokeWidth = strokeWidth;
 	}
 	
 	@Override
@@ -25,7 +29,8 @@ public class Ellipse implements Paintable
 	{
 		// TODO Auto-generated method stub
 		g.setColor(this.strokeColor);
-		g.drawOval(x, y, width, height);
+		g.fillOval(x - strokeWidth, y - strokeWidth , width + strokeWidth * 2, height + strokeWidth * 2);
+		//g.drawOval(x, y, width, height);
 		g.setColor(fillColor);
 		g.fillOval(x, y, width, height);
 	}
