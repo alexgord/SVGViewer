@@ -10,7 +10,7 @@ public class Rectangle implements Paintable
 	private Color fillColor;
 	private Color strokeColor;
 	
-	public Rectangle(int x, int y, int width, int height, Color fillColor, Color strokeColor)
+	public Rectangle(int x, int y, int height, int width, Color fillColor, Color strokeColor)
 	{
 		this.x = x;
 		this.y = y;
