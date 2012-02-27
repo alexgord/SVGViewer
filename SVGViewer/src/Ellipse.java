@@ -35,9 +35,9 @@ public class Ellipse implements Paintable
                 RenderingHints.VALUE_ANTIALIAS_ON);		
 		
 		g2.setColor(this.strokeColor);
-		g2.fillOval(x - strokeWidth, y - strokeWidth, width + strokeWidth * 2 , height + strokeWidth * 2);
+		g2.fillOval(x - strokeWidth / 2, y - strokeWidth / 2, width + strokeWidth  , height + strokeWidth);
 		g2.setColor(fillColor);
-		g2.fillOval(x, y, width, height);
+		g2.fillOval(x + strokeWidth / 2, y + strokeWidth / 2, width - strokeWidth, height - strokeWidth);
 		System.out.println("strokeWidth: " + strokeWidth);
 	}
 

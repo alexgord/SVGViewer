@@ -201,21 +201,29 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 						   numbers.add(m.group());
 						}
 						strokeColor = new Color(Integer.valueOf(numbers.get(0)), Integer.valueOf(numbers.get(1)), Integer.valueOf(numbers.get(2)));
-						
-						strokeWidth = Integer.decode(atts.getValue(6));
-						System.err.println("Stroke width: " + strokeWidth);
+												
 					}
 					else
 					{
 						strokeColor = null;
+						//strokeWidth = 0;
+					}
+					if (atts.getLength() >=6)
+					{
+						strokeWidth = Integer.decode(atts.getValue(6));
+					}
+					else
+					{
 						strokeWidth = 0;
 					}
+					System.err.println("Stroke width: " + strokeWidth);
 					toAdd = new Ellipse(cx - rx, cy - ry, ry * 2, rx * 2, fillColor, strokeColor, strokeWidth);
 					plist.add(toAdd);
 				}
 			}
-			System.out.println();
+			//System.out.println();
 		}
+		System.out.println();
 	}
 
 	@Override
