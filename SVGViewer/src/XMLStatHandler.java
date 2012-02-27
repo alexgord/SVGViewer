@@ -136,6 +136,7 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 				int width;
 				int x;
 				int y;
+				int strokeWidth;
 				x = Integer.decode(atts.getValue(0));
 				y = Integer.decode(atts.getValue(1));
 				height = Integer.decode(atts.getValue(2));
@@ -150,8 +151,20 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 				   numbers.add(m.group());
 				}
 				fillColor = new Color(Integer.valueOf(numbers.get(0)), Integer.valueOf(numbers.get(1)), Integer.valueOf(numbers.get(2)));
-				strokeColor = Color.black;
-				toAdd = new Rectangle(x, y, height, width, fillColor, strokeColor);
+				
+				p = Pattern.compile("\\d+");
+				m = p.matcher(atts.getValue(5));
+				numbers = new LinkedList<String>();
+				while (m.find())
+				{
+				   numbers.add(m.group());
+				}
+				strokeColor = new Color(Integer.valueOf(numbers.get(0)), Integer.valueOf(numbers.get(1)), Integer.valueOf(numbers.get(2)));
+				
+				strokeWidth = Integer.decode(atts.getValue(6));
+				
+				strokeWidth = Integer.decode(atts.getValue(6));
+				toAdd = new Rectangle(x, y, height, width, fillColor, strokeColor, strokeWidth);
 				plist.add(toAdd);
 			}
 			else
@@ -194,7 +207,7 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 					}
 					else
 					{
-						strokeColor = Color.black;
+						strokeColor = null;
 						strokeWidth = 0;
 					}
 					toAdd = new Ellipse(cx - rx, cy - ry, ry * 2, rx * 2, fillColor, strokeColor, strokeWidth);
