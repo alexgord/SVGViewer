@@ -36,7 +36,6 @@ public class Ellipse implements Paintable
 		
 		g2.setColor(this.strokeColor);
 		g2.fillOval(x - strokeWidth, y - strokeWidth, width + strokeWidth * 2 , height + strokeWidth * 2);
-		
 		g2.setColor(fillColor);
 		g2.fillOval(x, y, width, height);
 		System.out.println("strokeWidth: " + strokeWidth);
