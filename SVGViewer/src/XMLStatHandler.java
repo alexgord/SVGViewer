@@ -131,42 +131,32 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 			{
 				System.out.print(atts.getQName(i) + "=" + atts.getValue(i) + " ");
 			}
-			if (qName == "rect")
+			if (qName == "rect") //rect
 			{
 				int height;
 				int width;
 				int x;
 				int y;
 				int strokeWidth = 1;
-				x = Integer.decode(atts.getValue(0));
-				y = Integer.decode(atts.getValue(1));
-				height = Integer.decode(atts.getValue(2));
-				width = Integer.decode(atts.getValue(3));
-				//fillColor = Color.getColor(atts.getValue(4));//Color.blue;
-				LinkedList<String> numbers = new LinkedList<String>();
 
-				Pattern p = Pattern.compile("\\d+");
-				Matcher m = p.matcher(atts.getValue(4)); 
-				while (m.find())
+				x = Integer.decode(atts.getValue(atts.getIndex("x")));
+				y = Integer.decode(atts.getValue(atts.getIndex("y")));
+				height = Integer.decode(atts.getValue(atts.getIndex("height")));
+				width = Integer.decode(atts.getValue(atts.getIndex("width")));
+				System.out.println("width: " + width);
+				if (atts.getIndex("fill") != -1)
 				{
-				   numbers.add(m.group());
+					fillColor = ParserHelper.getColor(atts.getValue(atts.getIndex("fill")));
 				}
-				fillColor = new Color(Integer.valueOf(numbers.get(0)), Integer.valueOf(numbers.get(1)), Integer.valueOf(numbers.get(2)));
-				
-				if (!atts.getValue(5).toString().equals("none"))
+				if (atts.getIndex("stroke") != -1)
 				{
-					p = Pattern.compile("\\d+");
-					m = p.matcher(atts.getValue(5));
-					numbers = new LinkedList<String>();
-					while (m.find())
-					{
-					   numbers.add(m.group());
-					}
-					strokeColor = new Color(Integer.valueOf(numbers.get(0)), Integer.valueOf(numbers.get(1)), Integer.valueOf(numbers.get(2)));
-					
-					strokeWidth = Integer.decode(atts.getValue(6));
-				
+					strokeColor = ParserHelper.getColor(atts.getValue(atts.getIndex("stroke")));
 				}
+				if (atts.getIndex("stroke-width") != -1)
+				{
+					strokeWidth = Integer.decode(atts.getValue(atts.getIndex("stroke-width")));
+				}
+				
 				toAdd = new Rectangle(x, y, height, width, fillColor, strokeColor, strokeWidth);
 				plist.add(toAdd);
 			}
@@ -178,56 +168,24 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 					int rx;
 					int cx;
 					int cy;
-					cx = Integer.decode(atts.getValue(0));
-					cy = Integer.decode(atts.getValue(1));
-					rx = Integer.decode(atts.getValue(2));
-					ry = Integer.decode(atts.getValue(3));
+					cx = Integer.decode(atts.getValue(atts.getIndex("cx")));
+					cy = Integer.decode(atts.getValue(atts.getIndex("cy")));
+					rx = Integer.decode(atts.getValue(atts.getIndex("rx")));
+					ry = Integer.decode(atts.getValue(atts.getIndex("ry")));
 					int strokeWidth = 0;
 					//fillColor = Color.getColor(atts.getValue(4));//Color.blue;
-					LinkedList<String> numbers = new LinkedList<String>();
-					Pattern p;
-					Matcher m;
-					if (!atts.getValue(4).equals("none"))
+					if (atts.getIndex("fill") != -1)
 					{
-						p = Pattern.compile("\\d+");
-						m = p.matcher(atts.getValue(4)); 
-						while (m.find())
-						{
-						   numbers.add(m.group());
-						}
-						fillColor = new Color(Integer.valueOf(numbers.get(0)), Integer.valueOf(numbers.get(1)), Integer.valueOf(numbers.get(2)));
+						fillColor = ParserHelper.getColor(atts.getValue(atts.getIndex("fill")));
 					}
-					if (atts.getLength() > 5)
+					if (atts.getIndex("stroke") != -1)
 					{
-						if (!atts.getValue(5).toString().equals("none"))
-						{
-							p = Pattern.compile("\\d+");
-							m = p.matcher(atts.getValue(5));
-							numbers = new LinkedList<String>();
-							while (m.find())
-							{
-							   numbers.add(m.group());
-							}
-							strokeColor = new Color(Integer.valueOf(numbers.get(0)), Integer.valueOf(numbers.get(1)), Integer.valueOf(numbers.get(2)));
-						}
-												
+						strokeColor = ParserHelper.getColor(atts.getValue(atts.getIndex("stroke")));
 					}
-					else
+					if (atts.getIndex("stroke-width") != -1)
 					{
-						//strokeColor = null;
+						strokeWidth = Integer.decode(atts.getValue(atts.getIndex("stroke-width")));
 					}
-					if (atts.getLength() >6)
-					{
-						if (!atts.getValue(5).toString().equals("none"))
-						{
-							strokeWidth = Integer.decode(atts.getValue(6));
-						}
-					}
-					else
-					{
-						strokeWidth = 1;
-					}
-					System.err.println("Stroke width: " + strokeWidth);
 					toAdd = new Ellipse(cx - rx, cy - ry, ry * 2, rx * 2, fillColor, strokeColor, strokeWidth);
 					plist.add(toAdd);
 				}
@@ -239,24 +197,14 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 						int x2;
 						int y1;
 						int y2;
-						x1 = Integer.decode(atts.getValue(0));
-						y1 = Integer.decode(atts.getValue(1));
-						x2 = Integer.decode(atts.getValue(2));
-						y2 = Integer.decode(atts.getValue(3));
+						x1 = Integer.decode(atts.getValue(atts.getIndex("x1")));
+						y1 = Integer.decode(atts.getValue(atts.getIndex("y1")));
+						x2 = Integer.decode(atts.getValue(atts.getIndex("x2")));
+						y2 = Integer.decode(atts.getValue(atts.getIndex("y2")));
 						int strokeWidth = 1;
-						//fillColor = Color.getColor(atts.getValue(4));//Color.blue;
-						LinkedList<String> numbers = new LinkedList<String>();
-						Pattern p;
-						Matcher m;
-						if (!atts.getValue(4).equals("none"))
+						if (atts.getIndex("stroke") != -1)
 						{
-							p = Pattern.compile("\\d+");
-							m = p.matcher(atts.getValue(4)); 
-							while (m.find())
-							{
-							   numbers.add(m.group());
-							}
-							strokeColor = new Color(Integer.valueOf(numbers.get(0)), Integer.valueOf(numbers.get(1)), Integer.valueOf(numbers.get(2)));
+							strokeColor = ParserHelper.getColor(atts.getValue(atts.getIndex("stroke")));
 						}
 						toAdd = new Line(x1, y1, x2, y2, strokeColor);
 						plist.add(toAdd);
@@ -265,40 +213,14 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 					{
 						if (qName == "polyline") //polyline
 						{
-							ArrayList<Integer> yPoints = new ArrayList<Integer>();
-							ArrayList<Integer> xPoints = new ArrayList<Integer>();
-							LinkedList<String> numbers = new LinkedList<String>();
-							Pattern p;
-							Matcher m;
-
-							p = Pattern.compile("\\d+");
-							m = p.matcher(atts.getValue(1)); 
-							while (m.find())
+							int[] yPoints = ParserHelper.getPoints(atts.getValue(atts.getIndex("points")), "y");
+							int[] xPoints = ParserHelper.getPoints(atts.getValue(atts.getIndex("points")), "x");;
+							if (atts.getIndex("stroke") != -1)
 							{
-							   numbers.add(m.group());
-							}
-							strokeColor = new Color(Integer.valueOf(numbers.get(0)), Integer.valueOf(numbers.get(1)), Integer.valueOf(numbers.get(2)));
-							
-							m = p.matcher(atts.getValue(2));
-							numbers.clear();
-							while (m.find())
-							{
-							   numbers.add(m.group());
+								strokeColor = ParserHelper.getColor(atts.getValue(atts.getIndex("stroke")));
 							}
 							
-							for (int i = 0; i < numbers.size(); i++)
-							{
-								if (i % 2 == 0)
-								{
-									xPoints.add(Integer.valueOf(numbers.get(i)));
-								}
-								else
-								{
-									yPoints.add(Integer.valueOf(numbers.get(i)));
-								}
-							}
-							
-							toAdd = new Polyline(ArrayHelper.convertToPrimitive(xPoints), ArrayHelper.convertToPrimitive(yPoints), xPoints.size(), strokeColor);
+							toAdd = new Polyline(xPoints, yPoints, xPoints.length, strokeColor);
 							plist.add(toAdd);
 						}
 						else
