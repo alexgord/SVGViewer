@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 
 public class Line implements Paintable
@@ -23,9 +25,11 @@ public class Line implements Paintable
 	public void paint(Graphics g)
 	{
 		// TODO Auto-generated method stub
-
-		g.setColor(this.strokeColor);
-		g.drawLine(x1, y1, x2, y2);		
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setColor(this.strokeColor);
+		g2.drawLine(x1, y1, x2, y2);		
 
 	}
 

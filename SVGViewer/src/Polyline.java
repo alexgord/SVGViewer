@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 
 public class Polyline implements Paintable
@@ -21,8 +23,11 @@ public class Polyline implements Paintable
 	public void paint(Graphics g)
 	{
 		// TODO Auto-generated method stub
-		g.setColor(this.strokeColor);
-		g.drawPolyline(this.xPoints, this.yPoints, this.nPoints);
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setColor(this.strokeColor);
+		g2.drawPolyline(this.xPoints, this.yPoints, this.nPoints);
 	}
 
 }

@@ -80,7 +80,7 @@ public class SVGViewer
 		canvas6.setBounds(frame.getBounds());
 		frame.add(canvas6);
 		frame.setVisible(true);*/
-		String uri = "http://linux-cs.johnabbott.qc.ca/~ian/cs603/asg2/ellipses.svg";
+		String uri = "http://linux-cs.johnabbott.qc.ca/~ian/cs603/asg2/drawing2.svg";
 		XMLReader reader = XMLReaderFactory.createXMLReader();
 		XMLStatHandler handler = new XMLStatHandler();
 		reader.setErrorHandler(handler);

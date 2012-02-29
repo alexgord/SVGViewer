@@ -1,6 +1,10 @@
+import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 public class Rectangle implements Paintable
 {
@@ -27,10 +31,18 @@ public class Rectangle implements Paintable
 	public void paint(Graphics g)
 	{
 		// TODO Auto-generated method stub
-		g.setColor(this.strokeColor);
-		g.fillRect(x - strokeWidth, y - strokeWidth, width + strokeWidth * 2, height + strokeWidth * 2);
-		g.setColor(fillColor);
-		g.fillRect(x, y, width, height);
+		Graphics2D g2 = (Graphics2D)g;		
+		
+		if (fillColor != null)
+		{
+			g2.setColor(fillColor);
+			g2.fillRect(x, y, width, height);
+		}
+		
+		Shape outline = new Rectangle2D.Double(x, y, width, height);
+		g2.setStroke(new BasicStroke(strokeWidth));
+		g2.setColor(this.strokeColor);
+		g2.draw(outline);	
 	}
 
 }
