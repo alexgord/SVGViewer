@@ -3,7 +3,6 @@ import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 public class Rectangle implements Paintable
@@ -28,6 +27,10 @@ public class Rectangle implements Paintable
 	}
 
 	@Override
+	/****************************************************************************
+								paint Function
+		Function paints a rectangle to the screen using the java SWING library        
+	 ****************************************************************************/
 	public void paint(Graphics g)
 	{
 		// TODO Auto-generated method stub

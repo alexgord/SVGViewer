@@ -5,7 +5,7 @@ import javax.swing.JComponent;
 
 public class CanvasComponent extends JComponent
 {
-
+	private static final long serialVersionUID = 1L;
 	private Paintable paintable;
 	
 	public CanvasComponent(Paintable paintable)
