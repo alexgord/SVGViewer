@@ -20,6 +20,9 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 
 	public XMLStatHandler() {
 		plist = new ArrayList<Paintable>();
+		fwidth = 0;
+		fheight = 0;
+		title = "";
 	}
 
 	/* ==========================================================================
@@ -123,7 +126,7 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes atts)
 			throws SAXException
-			{
+	{
 		Paintable toAdd;
 		Color strokeColor = null;
 		Color fillColor = null;
@@ -131,6 +134,7 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 		System.out.println("start <" + qName + "> element");
 		if(atts.getLength() > 0) {
 			System.out.print("\tattributes: ");
+			//Print the values of all the attributes of this element
 			for(int i=0; i < atts.getLength(); i++)
 			{
 				System.out.print(atts.getQName(i) + "=" + atts.getValue(i) + " ");
@@ -138,24 +142,41 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 			//Begin parsing of the current element
 			if (qName == "rect") //If the element was a rectangle
 			{
-				int height;
-				int width;
-				int x;
-				int y;			
-
-				x = Integer.decode(atts.getValue(atts.getIndex("x")));
-				y = Integer.decode(atts.getValue(atts.getIndex("y")));
-				height = Integer.decode(atts.getValue(atts.getIndex("height")));
-				width = Integer.decode(atts.getValue(atts.getIndex("width")));
-				System.out.println("width: " + width);
+				int height = 0;
+				int width = 0;
+				int x = 0;
+				int y = 0;			
+				
+				if (atts.getIndex("x") != -1)
+				{
+					x = Integer.decode(atts.getValue(atts.getIndex("x")));
+				}
+				
+				if (atts.getIndex("y") != -1)
+				{
+					y = Integer.decode(atts.getValue(atts.getIndex("y")));
+				}				
+				
+				if (atts.getIndex("height") != -1)
+				{
+					height = Integer.decode(atts.getValue(atts.getIndex("height")));
+				}
+				
+				if (atts.getIndex("width") != -1)
+				{
+					width = Integer.decode(atts.getValue(atts.getIndex("width")));
+				}
+				
 				if (atts.getIndex("fill") != -1)
 				{
 					fillColor = ParserHelper.getColor(atts.getValue(atts.getIndex("fill")));
 				}
+				
 				if (atts.getIndex("stroke") != -1)
 				{
 					strokeColor = ParserHelper.getColor(atts.getValue(atts.getIndex("stroke")));
 				}
+				
 				if (atts.getIndex("stroke-width") != -1)
 				{
 					strokeWidth = Integer.decode(atts.getValue(atts.getIndex("stroke-width")));
@@ -163,59 +184,104 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 
 				toAdd = new Rectangle(x, y, height, width, fillColor, strokeColor, strokeWidth);
 				plist.add(toAdd);
-			}
+			}//End Rectangle
 			else
 			{
 				if (qName == "ellipse")//If the element was an ellipse
 				{
-					int ry;
-					int rx;
-					int cx;
-					int cy;
-					cx = Integer.decode(atts.getValue(atts.getIndex("cx")));
-					cy = Integer.decode(atts.getValue(atts.getIndex("cy")));
-					rx = Integer.decode(atts.getValue(atts.getIndex("rx")));
-					ry = Integer.decode(atts.getValue(atts.getIndex("ry")));
+					int ry = 0;
+					int rx = 0;
+					int cx = 0;
+					int cy = 0;
+					
+					if (atts.getIndex("cx") != -1)
+					{
+						cx = Integer.decode(atts.getValue(atts.getIndex("cx")));
+					}
+					
+					if (atts.getIndex("cy") != -1)
+					{
+						cy = Integer.decode(atts.getValue(atts.getIndex("cy")));
+					}
+					
+					if (atts.getIndex("rx") != -1)
+					{
+						rx = Integer.decode(atts.getValue(atts.getIndex("rx")));
+					}
+					
+					if (atts.getIndex("ry") != -1)
+					{
+						ry = Integer.decode(atts.getValue(atts.getIndex("ry")));
+					}
+					
 					if (atts.getIndex("fill") != -1)
 					{
 						fillColor = ParserHelper.getColor(atts.getValue(atts.getIndex("fill")));
 					}
+					
 					if (atts.getIndex("stroke") != -1)
 					{
 						strokeColor = ParserHelper.getColor(atts.getValue(atts.getIndex("stroke")));
 					}
+					
 					if (atts.getIndex("stroke-width") != -1)
 					{
 						strokeWidth = Integer.decode(atts.getValue(atts.getIndex("stroke-width")));
 					}
+					
 					toAdd = new Ellipse(cx - rx, cy - ry, ry * 2, rx * 2, fillColor, strokeColor, strokeWidth);
 					plist.add(toAdd);
-				}
+				}//End Ellipse
 				else
 				{
 					if (qName == "line")//If the element was a line
 					{
-						int x1;
-						int x2;
-						int y1;
-						int y2;
-						x1 = Integer.decode(atts.getValue(atts.getIndex("x1")));
-						y1 = Integer.decode(atts.getValue(atts.getIndex("y1")));
-						x2 = Integer.decode(atts.getValue(atts.getIndex("x2")));
-						y2 = Integer.decode(atts.getValue(atts.getIndex("y2")));
+						int x1 = 0;
+						int x2 = 0;
+						int y1 = 0;
+						int y2 = 0;
+						
+						if (atts.getIndex("x1") != -1)
+						{
+							x1 = Integer.decode(atts.getValue(atts.getIndex("x1")));
+						}
+						
+						if (atts.getIndex("y1") != -1)
+						{
+							y1 = Integer.decode(atts.getValue(atts.getIndex("y1")));
+						}
+						
+						
+						if (atts.getIndex("x2") != -1)
+						{
+							x2 = Integer.decode(atts.getValue(atts.getIndex("x2")));
+						}
+						
+						if (atts.getIndex("y2") != -1)
+						{
+							y2 = Integer.decode(atts.getValue(atts.getIndex("y2")));
+						}
+						
 						if (atts.getIndex("stroke") != -1)
 						{
 							strokeColor = ParserHelper.getColor(atts.getValue(atts.getIndex("stroke")));
 						}
 						toAdd = new Line(x1, y1, x2, y2, strokeColor);
 						plist.add(toAdd);
-					}
+					}//End line
 					else
 					{
 						if (qName == "polyline") //If the element was a polyline
 						{
-							int[] yPoints = ParserHelper.getPoints(atts.getValue(atts.getIndex("points")), "y");
-							int[] xPoints = ParserHelper.getPoints(atts.getValue(atts.getIndex("points")), "x");
+							int[] yPoints = {0,0,0,0};
+							int[] xPoints = {0,0,0,0};
+							
+							if (atts.getIndex("points") != -1)
+							{
+								yPoints = ParserHelper.getPoints(atts.getValue(atts.getIndex("points")), "y");
+								xPoints = ParserHelper.getPoints(atts.getValue(atts.getIndex("points")), "x");
+							}
+							
 							if (atts.getIndex("stroke") != -1)
 							{
 								strokeColor = ParserHelper.getColor(atts.getValue(atts.getIndex("stroke")));
@@ -223,14 +289,19 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 
 							toAdd = new Polyline(xPoints, yPoints, xPoints.length, strokeColor);
 							plist.add(toAdd);
-						}
+						}//End polyline
 						else
 						{
 							if (qName == "polygon") //If the element was a polygon
 							{
-								int[] yPoints = ParserHelper.getPoints(atts.getValue(atts.getIndex("points")), "y");
-								int[] xPoints = ParserHelper.getPoints(atts.getValue(atts.getIndex("points")), "x");
-
+								int[] yPoints = {0,0,0,0};
+								int[] xPoints = {0,0,0,0};
+								
+								if (atts.getIndex("points") != -1)
+								{
+									yPoints = ParserHelper.getPoints(atts.getValue(atts.getIndex("points")), "y");
+									xPoints = ParserHelper.getPoints(atts.getValue(atts.getIndex("points")), "x");
+								}
 								if (atts.getIndex("fill") != -1)
 								{
 									strokeColor = ParserHelper.getColor(atts.getValue(atts.getIndex("stroke")));
@@ -243,39 +314,62 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 
 								toAdd = new Polygon(xPoints, yPoints, xPoints.length, fillColor, strokeColor);
 								plist.add(toAdd);
-							}
+							}//End polygon
 							else
 							{
 								if (qName == "circle") //If the element was a circle
 								{
-									int r;
-									int cx;
-									int cy;
-									cx = Integer.decode(atts.getValue(atts.getIndex("cx")));
-									cy = Integer.decode(atts.getValue(atts.getIndex("cy")));
-									r = Integer.decode(atts.getValue(atts.getIndex("r")));
+									int r = 0;//Radius of the circle
+									int cx = 0;//x coordinate of the center of the circle
+									int cy = 0;//y coordinate of the center of the circle
+									
+									if (atts.getIndex("cx") != -1)
+									{
+										cx = Integer.decode(atts.getValue(atts.getIndex("cx")));
+									}
+									
+									if (atts.getIndex("cy") != -1)
+									{
+										cy = Integer.decode(atts.getValue(atts.getIndex("cy")));
+									}
+									
+									if (atts.getIndex("r") != -1)
+									{
+										r = Integer.decode(atts.getValue(atts.getIndex("r")));
+									}
+									
 									if (atts.getIndex("fill") != -1)
 									{
 										fillColor = ParserHelper.getColor(atts.getValue(atts.getIndex("fill")));
 									}
+									
 									if (atts.getIndex("stroke") != -1)
 									{
 										strokeColor = ParserHelper.getColor(atts.getValue(atts.getIndex("stroke")));
 									}
+									
 									if (atts.getIndex("stroke-width") != -1)
 									{
 										strokeWidth = Integer.decode(atts.getValue(atts.getIndex("stroke-width")));
 									}
+									
 									toAdd = new Ellipse(cx - r, cy - r, r * 2, r * 2, fillColor, strokeColor, strokeWidth);
 									plist.add(toAdd);
-								}
+								}//End Circle
 								else
 								{
 									if (qName == "svg") //If the element was the svg element itself
 									{
-										fwidth = ParserHelper.getMeasure(atts.getValue(atts.getIndex("width")));
-										fheight = ParserHelper.getMeasure(atts.getValue(atts.getIndex("height")));
-									}
+										if (atts.getIndex("width") != -1)
+										{
+											fwidth = ParserHelper.getMeasure(atts.getValue(atts.getIndex("width")));
+										}
+										
+										if (atts.getIndex("height") != -1)
+										{
+											fheight = ParserHelper.getMeasure(atts.getValue(atts.getIndex("height")));
+										}
+									}//End svg
 								}
 							}
 						}
@@ -284,7 +378,7 @@ public class XMLStatHandler implements ErrorHandler, ContentHandler
 			}
 		}
 		System.out.println();
-			}
+	}
 
 	@Override
 	public void startPrefixMapping(String arg0, String arg1)

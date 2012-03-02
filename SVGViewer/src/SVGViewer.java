@@ -21,11 +21,22 @@ public class SVGViewer
 	 * @param args
 	 * @throws SAXException 
 	 */
-	public static void main(String[] args) throws SAXException
+	public static void main(String[] args)
 	{
 		System.out.println("Path: " + args[0]);
 		String uri = args[0]; //
-		XMLReader reader = XMLReaderFactory.createXMLReader();
+		
+		XMLReader reader = null;
+		try
+		{
+			reader = XMLReaderFactory.createXMLReader();
+		}
+		catch (SAXException e)
+		{
+			System.err.println(e.getMessage());
+			System.exit(1);
+		}
+		
 		XMLStatHandler handler = new XMLStatHandler();
 		reader.setErrorHandler(handler);
 		reader.setContentHandler(handler);
@@ -39,7 +50,7 @@ public class SVGViewer
 			}
 		} 
 		catch (Exception e) {
-			System.err.println(e.getMessage());
+			System.err.println(e.getMessage() + " could not be opened");
 			System.exit(1);
 		} 
 	}
